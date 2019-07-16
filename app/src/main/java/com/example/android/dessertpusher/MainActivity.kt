@@ -32,6 +32,10 @@ import androidx.lifecycle.LifecycleObserver
 import com.example.android.dessertpusher.databinding.ActivityMainBinding
 import timber.log.Timber
 
+const val KEY_REVENUE = "REVENUE"
+const val KEY_DESSERTS_SOLD = "DESSERTS_SOLD"
+const val KEY_DESSERT_TIMER = "DESSERT_TIMER"
+
 class MainActivity : AppCompatActivity(), LifecycleObserver {
 
 //    companion object{
@@ -84,6 +88,14 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
             onDessertClicked()
         }
 
+        // Restore State Instance Of Local Variables
+        if(savedInstanceState!=null)
+        {
+            revenue = savedInstanceState?.getInt(KEY_REVENUE)
+            dessertsSold = savedInstanceState?.getInt(KEY_DESSERTS_SOLD)
+            _DessertTimer.secondsCount = savedInstanceState?.getInt(KEY_DESSERT_TIMER)
+        }
+
         // Set the TextViews to the right values
         binding.revenue = revenue
         binding.amountSold = dessertsSold
@@ -101,6 +113,14 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     override fun onStart() {
         super.onStart()
         Timber.d(":onStart Called")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Timber.d(": Saving Current App State")
+        outState.putInt(KEY_REVENUE,revenue)
+        outState.putInt(KEY_DESSERTS_SOLD,dessertsSold)
+        outState.putInt(KEY_DESSERT_TIMER,_DessertTimer.secondsCount)
     }
 
     override fun onStop() {
