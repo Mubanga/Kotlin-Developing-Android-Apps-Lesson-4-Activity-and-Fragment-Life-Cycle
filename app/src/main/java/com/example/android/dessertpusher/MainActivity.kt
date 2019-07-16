@@ -21,6 +21,7 @@ package com.example.android.dessertpusher
 
 import android.content.ActivityNotFoundException
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -32,10 +33,14 @@ import com.example.android.dessertpusher.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), LifecycleObserver {
 
+    companion object{
+        val TAG = "MainActivity"
+    }
+
     private var revenue = 0
     private var dessertsSold = 0
 
-    // Contains all the views
+    // ***N.B*** Contains all the views ***N.B***
     private lateinit var binding: ActivityMainBinding
 
     /** Dessert Data **/
@@ -65,6 +70,11 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     )
     private var currentDessert = allDesserts[0]
 
+    override fun onStart() {
+        super.onStart()
+        Log.d(MainActivity.TAG,": onStart Called")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -81,6 +91,8 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
 
         // Make sure the correct dessert is showing
         binding.dessertButton.setImageResource(currentDessert.imageId)
+
+        Log.d(MainActivity.TAG,": onCreate Called")
     }
 
     /**
