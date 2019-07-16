@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
 
     private var revenue = 0
     private var dessertsSold = 0
+  //  private lateinit var _DessertTimer:DessertTimer
+    private val _DessertTimer by lazy { DessertTimer(lifecycle)}
 
     // ***N.B*** Contains all the views ***N.B***
     private lateinit var binding: ActivityMainBinding
@@ -90,6 +92,10 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         binding.dessertButton.setImageResource(currentDessert.imageId)
 
         Timber.d("onCreate Called")
+
+        // Start Application Timer
+        Timber.d(": Starting DessertTimer")
+        _DessertTimer.startTimer()
     }
 
     override fun onStart() {
@@ -100,16 +106,22 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     override fun onStop() {
         super.onStop()
         Timber.d(":onStop Called")
+        Timber.d(": Dessert Timer Stopped With Second Count = ${_DessertTimer.secondsCount}")
+    //    _DessertTimer.stopTimer()
     }
 
     override fun onPause() {
         super.onPause()
         Timber.d("onPause Called")
+        Timber.d(": Dessert Timer Paused With Second Count = ${_DessertTimer.secondsCount}")
+     //   _DessertTimer.stopTimer()
     }
 
     override fun onResume() {
         super.onResume()
         Timber.d(":onResume Called")
+        Timber.d(": Dessert Timer Resuming With Second Count = ${_DessertTimer.secondsCount}")
+     //   _DessertTimer.startTimer()
     }
 
     override fun onDestroy() {
