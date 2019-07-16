@@ -30,12 +30,13 @@ import androidx.core.app.ShareCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleObserver
 import com.example.android.dessertpusher.databinding.ActivityMainBinding
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(), LifecycleObserver {
 
-    companion object{
-        val TAG = "MainActivity"
-    }
+//    companion object{
+//        val TAG = "MainActivity"
+//    }
 
     private var revenue = 0
     private var dessertsSold = 0
@@ -70,10 +71,6 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
     )
     private var currentDessert = allDesserts[0]
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(MainActivity.TAG,": onStart Called")
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,7 +89,32 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         // Make sure the correct dessert is showing
         binding.dessertButton.setImageResource(currentDessert.imageId)
 
-        Log.d(MainActivity.TAG,": onCreate Called")
+        Timber.d("onCreate Called")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Timber.d(":onStart Called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Timber.d(":onStop Called")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.d(":onResume Called")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.d(":onDestroy Called")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Timber.d(":onRestart Called")
     }
 
     /**
